@@ -120,7 +120,6 @@ st.markdown("""---""")
 st.markdown(
     """
     <div style="text-align: center; font-size: 14px; color: gray;">
-        Built with ❤️ using <b>Streamlit</b><br>
         Created by <b>Barthez Moses</b><br>
         📧 Contact: <a href="mailto:barthezmoses18@gmail.com">barthezmoses18@gmail.com</a> |
         💼 GitHub: <a href="https://github.com/skipperForREAL" target="_blank">skipperForREAL</a>
