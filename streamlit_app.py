@@ -92,15 +92,24 @@ API_KEY = "87d5a1bed3844ea5bf652115a91ee948"  # 👉 Get one free at newsapi.org
 news_url = f"https://newsapi.org/v2/everything?q={ticker_symbol}&sortBy=publishedAt&apiKey={API_KEY}"
 
 response = requests.get(news_url)
+st.write("### 📰 Latest Business News")
+
 if response.status_code == 200:
     articles = response.json().get("articles", [])[:5]
+
     for article in articles:
         st.markdown(f"""
-        **[{article['title']}]({article['url']})**  
-        *{article['source']['name']} - {article['publishedAt'].split('T')[0]}*  
-        {article['description']}  
-        ---
-        """)
+        <div style="font-size:14px; line-height:1.5; margin-bottom:20px;">
+            <b><a href="{article['url']}" target="_blank" style="text-decoration:none; color:#1DB954;">
+            {article['title']}
+            </a></b><br>
+            <span style="color:gray; font-size:12px;">
+                {article['source']['name']} • {article['publishedAt'].split('T')[0]}
+            </span><br>
+            {article['description'] if article['description'] else ''}
+        </div>
+        <hr style="margin-top:5px; margin-bottom:15px;">
+        """, unsafe_allow_html=True)
 else:
     st.warning("News couldn't be fetched at the moment.")
 
