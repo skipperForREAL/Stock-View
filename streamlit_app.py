@@ -92,7 +92,7 @@ API_KEY = "87d5a1bed3844ea5bf652115a91ee948"  # 👉 Get one free at newsapi.org
 news_url = f"https://newsapi.org/v2/everything?q={ticker_symbol}&sortBy=publishedAt&apiKey={API_KEY}"
 
 response = requests.get(news_url)
-st.write("### 📰 Latest Business News")
+
 
 if response.status_code == 200:
     articles = response.json().get("articles", [])[:5]
