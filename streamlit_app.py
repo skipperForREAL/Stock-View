@@ -1,8 +1,12 @@
 import streamlit as st
 import yfinance as yf
+import requests
+
 
 # ---------------------- CONFIGURATION ---------------------- #
 st.set_page_config(page_title="Daily Stock Viewer", layout="wide")
+import requests
+
 
 # ---------------------- APP TITLE -------------------------- #
 st.title("📈 Daily Stocks Viewer")
@@ -81,6 +85,24 @@ if not stock_data.empty:
 
 else:
     st.warning("⚠️ No data available for the selected period. The market may be closed.")
+# --- Fetch News Articles ---
+st.write("### 📰 Latest Business News")
+
+API_KEY = "87d5a1bed3844ea5bf652115a91ee948"  # 👉 Get one free at newsapi.org
+news_url = f"https://newsapi.org/v2/everything?q={ticker_symbol}&sortBy=publishedAt&apiKey={API_KEY}"
+
+response = requests.get(news_url)
+if response.status_code == 200:
+    articles = response.json().get("articles", [])[:5]
+    for article in articles:
+        st.markdown(f"""
+        **[{article['title']}]({article['url']})**  
+        *{article['source']['name']} - {article['publishedAt'].split('T')[0]}*  
+        {article['description']}  
+        ---
+        """)
+else:
+    st.warning("News couldn't be fetched at the moment.")
 
 # ---------------------- FOOTER ---------------------------- #
 st.subheader(f"🧾 Showing Data for: {selected_stock} ({ticker_symbol})")
